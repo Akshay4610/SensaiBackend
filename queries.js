@@ -7,7 +7,7 @@ const pool = new Pool({
     port: 5432
 })
 
-const getUsers = (request, response) => {
+const getUsers =  (request, response) => {
     pool.query('SELECT * FROM users_users ORDER BY id ASC', (error, results) => {
         if (error) {
             throw error
@@ -16,16 +16,16 @@ const getUsers = (request, response) => {
     })
 }
 
-// const getUserById = (request, response) => {
-//     const id = parseInt(request.params.id)
+const getUserById = (request, response) => {
+    const id = parseInt(request.params.id)
 
-//     pool.query('SELECT * FROM users_users WHERE id = $1', [id], (error, response) => {
-//         if (error) {
-//             throw error
-//         }
-//         response.status(200).json(results.rows)
-//     })
-// }
+    pool.query('SELECT * FROM users_users WHERE id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
 
 const createUser = (request, response) => {
     const { password,email, isActive, isAdmin, isStaff, fullName  } = request.body
@@ -68,7 +68,7 @@ const createUser = (request, response) => {
 
 module.exports = {
      getUsers,
-    // getUserById,
+    getUserById,
     createUser,
     // updateUser,
     // deleteUser
