@@ -7,11 +7,11 @@ const auth = require('./authorization')
 
 const app = express()
 
-const port = 3000
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 
-app.use(cors({
-  origin: "http://localhost:4200"
-}))
+// app.use(cors({
+//   origin: "http://localhost:4200"
+// }))
 
 app.use(bodyParser.urlencoded({
   extended: true
