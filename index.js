@@ -1,20 +1,22 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const bodyParser = require('body-parser')
 const cors = require("cors");
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(bodyParser.json());
-app.use(cors());
 
 const db = require('./queries')
 const auth = require('./authorization')
 
+const app = express()
 
+const port = 3000
 
-// const port = 3000
-//const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+app.use(cors({
+  origin: "http://localhost:4200"
+}))
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json())
 
 
 app.get('/', (request, response) => {
@@ -28,7 +30,6 @@ app.post('/users', db.createUser)
 // app.delete('/users/:id', db.deleteUser)
 app.post('/users/authenticate', auth.signin);
 
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
