@@ -1,13 +1,14 @@
+const config = require("./config/auth.config");
+
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "sensai",
-  password: "password",
-  port: 5432
+  user: config.pg_user,
+  host: config.pg_host,
+  database: config.pg_database,
+  password: config.pg_password,
+  port: config.pg_port
 });
 
-const config = require("./config/auth.config");
 
 const jwt = require("jsonwebtoken");
 const db = require("./queries");
@@ -31,11 +32,11 @@ const signin = (request, response) => {
       });
     }
 
-    let passwordIsValid = request.body.password === user.password;
-    // var passwordIsValid = bcrypt.compareSync(
-    //     request.body.password,
-    //     user.password
-    //   );
+    //let passwordIsValid = request.body.password === user.password;
+    var passwordIsValid = bcrypt.compareSync(
+        request.body.password,
+        user.password
+      );
 
     if (!passwordIsValid) {
       return response.status(401).send({
@@ -59,6 +60,9 @@ const signin = (request, response) => {
     });
     //})
   });
+  // response.status(200).send({
+  //       message: 'Api called'
+  //     });
 };
 
 module.exports = {
