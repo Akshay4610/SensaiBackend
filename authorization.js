@@ -4,7 +4,7 @@ const pool = new Pool({
   host: "localhost",
   database: "sensai",
   password: "password",
-  port: 5432
+  port: 5432,
 });
 
 const config = require("./config/auth.config");
