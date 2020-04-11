@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 
-const jwtt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const db = require("./queries");
 const bcrypt = require("bcryptjs");
 
