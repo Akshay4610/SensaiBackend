@@ -2,23 +2,15 @@ const config = require("./config/auth.config");
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-<<<<<<< HEAD
   user: config.pg_user,
   host: config.pg_host,
   database: config.pg_database,
   password: config.pg_password,
   port: config.pg_port
-=======
-  user: "postgres",
-  host: "localhost",
-  database: "sensai",
-  password: "password",
-  port: 5432,
->>>>>>> ea3b2a5d660a7c501b85c638b87eaa8193c7e67d
 });
 
 
-const jwt = require("jsonwebtoken");
+const jwtt = require("jsonwebtoken");
 const db = require("./queries");
 const bcrypt = require("bcryptjs");
 
