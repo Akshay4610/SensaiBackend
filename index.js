@@ -30,6 +30,7 @@ app.post('/users/authenticate', auth.signin);;
 
 //teedy api start
 app.post('/teedy/users/create',teedy_api.createUser);
+app.post('/teedy/users/login',teedy_api.loginUser);
 app.get('/teedy',(request, response) => {
   response.json({ info: 'teedy working' })
 });
