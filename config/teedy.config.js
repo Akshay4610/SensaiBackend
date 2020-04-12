@@ -14,6 +14,11 @@ module.exports = {
                 path: 'user/login?username=#u#&password=#p#',
                 method: 'POST',
                 content_type: 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            logout: {
+                path: 'user/logout',
+                method: 'POST',
+                content_type: 'application/x-www-form-urlencoded;charset=UTF-8'
             }
         }
     }
