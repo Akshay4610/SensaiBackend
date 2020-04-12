@@ -23,7 +23,19 @@ const loginUser = (request, response) => {
     options.path = options.path.replace('#u#', request.body.userName);
     baseRequest.executeRequest(options, undefined).then(function (result) {
         if (result.status == 200) {
-            response.status(result.status).json({ auth_token: config.user_cookie, message: 'Login Successful' });
+            response.status(result.status).json({ auth_token: config.user_auth_token, message: 'Login Successful' });
+        }
+        response.status(result.status).json(result.data);
+    }).catch(function (err) {
+        console.log(err);
+        response.status(err.status).json(err.data);
+    });
+}
+const logoutUser = (request, response) => {
+    let options = baseRequest.options(config.rest_api.user.logout,request.headers["cookie"]);
+    baseRequest.executeRequest(options, undefined).then(function (result) {
+        if (result.status == 200) {
+            response.status(result.status).json({ auth_token: '', message: 'Logout Successful' });
         }
         response.status(result.status).json(result.data);
     }).catch(function (err) {
@@ -36,4 +48,5 @@ const loginUser = (request, response) => {
 module.exports = {
     createUser,
     loginUser,
+    logoutUser,
 }
