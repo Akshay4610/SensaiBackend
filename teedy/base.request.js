@@ -18,7 +18,7 @@ const options = (option) => {
     };
 }
 
-const putData = (options, reqData) => {
+const executeRequest = (options, reqData) => {
     let defer = q.defer();
     let request;
     if (!options) {
@@ -32,7 +32,12 @@ const putData = (options, reqData) => {
                 data += chunk;
             });
             resp.on('end', () => {
-                    defer.reject({ status: resp.statusCode, data: JSON.parse(data) });
+                if(options.path.toString().indexOf('/login')!=-1 && resp.statusCode==200){
+                    const headers=JSON.stringify(resp.headers);
+                    const jsonHeaders=JSON.parse(headers);
+                    config.user_auth_token = jsonHeaders["set-cookie"][0].split(';')[0].split('=')[0];
+                }
+                    defer.resolve({ status: resp.statusCode, data: JSON.parse(data) });
             });
 
         }).on("error", (err) => {
@@ -56,5 +61,5 @@ const putData = (options, reqData) => {
 
 module.exports = {
     options,
-    putData,
+    executeRequest,
 }
